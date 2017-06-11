@@ -134,6 +134,5 @@ function announceWinner() {
   })
 }
 
-console.log(deck)
 announceCards()
 announceWinner()
