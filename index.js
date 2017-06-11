@@ -1,5 +1,7 @@
 console.log('Playing a game of blackjack with 4 players!')
 
+const deck = createDeck()
+
 const players = [
   {
     name: 'You',
@@ -19,6 +21,19 @@ const players = [
   }
 ]
 
+function createDeck() {
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+  const suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
+  const cards = []
+
+  for (let s = 0; s < suits.length; s++) {
+    for (let n = 0; n < numbers.length; n++) {
+      cards.push(new Card(suits[s], getFace(numbers[n]), getPoints(numbers[n])))
+    }
+  }
+  return cards
+}
+
 function Card(suit, number, points) {
   return {
     suit: suit,
@@ -28,24 +43,10 @@ function Card(suit, number, points) {
 }
 
 function deal() {
-  const cardSuit = Math.floor(Math.random() * (5 - 1)) + 1
-  const cardNumber = Math.floor(Math.random() * (14 - 1)) + 1
-  return new Card(getSuit(cardSuit), getFace(cardNumber), getPoints(cardNumber))
-}
-
-function getSuit(suit) {
-  if (suit === 1) {
-    return 'Hearts'
-  }
-  else if (suit === 2) {
-    return 'Diamonds'
-  }
-  else if (suit === 3) {
-    return 'Clubs'
-  }
-  else if (suit === 4) {
-    return 'Spades'
-  }
+  const index = Math.floor(Math.random() * deck.length)
+  const card = deck[index]
+  const removed = deck.splice(index, 1)
+  return card
 }
 
 function getFace(number) {
@@ -133,5 +134,6 @@ function announceWinner() {
   })
 }
 
+console.log(deck)
 announceCards()
 announceWinner()
